@@ -19,7 +19,7 @@ function main()
     elseif IsButtonBeingPressed(1,0) and s < table.getn(options) then
       s = s + 1
     end
-    TextPrintString(s.."--"..options[s].name,1,1)
+    TextPrintString("Simple Trainer v1 By Breno Lins \n \n"..s.."--"..options[s].name,1,1)
     if IsButtonBeingPressed(3,0) then
       options[s].func()
     end
@@ -111,7 +111,7 @@ function VehicleSpawner()
 
       -- caso a funcao que permite o jogador ja esteja ativa previamente.
       if dirige then
-        TextPrintString("Já dirige!",4,2) 
+        TextPrintString("Já dirige!",4,2) -- remover isso depois (log)
       else 
         dirige = true
         TextPrintString("Permitindo jogador dirigir!",4,2)
