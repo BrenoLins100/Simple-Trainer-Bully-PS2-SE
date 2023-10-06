@@ -83,6 +83,27 @@ end
 -- FIM EXEMPLO OPÇÃO DO MENU
 
 
+-- Botões
+-- Here's a list of buttons too for anyone who needs it. One that is properly titled with the actions, rather than keys/buttons.
+
+0   Show Secondary Tasks
+1   Show Tasks/Objectives
+2   Zoom in
+3   Zoom out
+4   Map Menu
+5   Pause Menu
+6   Melee Attack
+7   Sprint
+8   Jump
+9   Grapple
+10   Lock On
+11   Previous Weapon
+12   Weapon Fire
+13   Next Weapon
+14   Look Back
+15   Crouch
+
+
 -- string symbols
 -- from unkn0wnsoldier1138
 
