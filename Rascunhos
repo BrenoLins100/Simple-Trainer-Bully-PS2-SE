@@ -1,3 +1,13 @@
+-- compilando script lua
+
+luac -o "script.lur" script.lua
+
+-- Editando arquivo img
+
+img -open "../script.img" -add "script.lur" -rebuild
+
+
+
 -- string symbols
 -- from unkn0wnsoldier1138
 
