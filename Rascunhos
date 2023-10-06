@@ -1,0 +1,46 @@
+-- string symbols
+-- from unkn0wnsoldier1138
+
+\n - create new line
+~n~ - create new line
+~RUN~ - sprint button
+\a - sprint button
+~ACCELERATE~ - sprint button
+~TAG_START~ - sprint
+~GRAPPLE - grapple button
+\b - grapple button
+~TAG_COMBO3~ - grapple button
+~ACTION~ - grapple button (buggy)
+~JUMP~ - jump button
+\t - jump button
+~CANCEL~ - jump
+~o~ - jump
+~ATTACK~ - melee attack button
+\f - melee attack button
+~SHOVEL~ - melee attack button
+~BRAKE~ - melee attack button
+~TAG_COMBO1~ - melee attack button
+~ATTACK_R~ - weapon wheel right
+~SCROLL_WEAPR~ - weapon wheel right
+~ATTACK_L~ - weapon wheel left
+~SCROLL_WEAPL~ - weapon wheel left
+~FIRE_WEAPON~ - weapon fire
+~lstick~ - move controls (?)
+~rstick~ - camera controls (?)
+~bullet~ - bullet
+~blipup~ - triangle blip
+~blipdown~ - upside down triangle blip(floors)
+~MANUAL_LOCK~ - lockon
+\r - lockon
+\16 - camera down
+\22 - bullworth logo
+~BULLY_CREST~ - bullworth logo
+~dup~ - zoom in button
+\14 - zoom in button
+~ddown~ - zoom out button
+\15 - zoom out button
+~dleft~ - left task button
+~dright~ - right task button
+~LOOK_BACK~ - look back button
+Ã„ - save book
+~save~ - save book
