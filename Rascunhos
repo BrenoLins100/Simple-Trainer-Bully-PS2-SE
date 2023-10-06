@@ -57,6 +57,31 @@ end
 
 -- FIM SETANDO ESTILO DE PEDRESTE
 
+-- Exemplo opção do menu
+
+function WeaponSelector()
+  local options = {
+    {name = "yardstick", id = 299},
+    {name = "bat", id = 300},
+  }
+  local s = 1
+  repeat
+    if IsButtonBeingPressed(0,0) and s > 1 then
+      s = s - 1
+    elseif IsButtonBeingPressed(1,0) and s < table.getn(options) then
+      s = s + 1
+    end
+    TextPrintString(s.."-"..options[s].name,1,1)
+    Wait(0)
+    if IsButtonBeingPressed(3,0) then
+     -- PedSetWeapon(gPlayer,options[s].id,1)
+     TextPrintString(tostring(IsItemAWeapon(options[s].id)),1,2) -- verificando se o item é uma arma
+    end
+  until IsButtonBeingPressed(14,0)
+end
+
+-- FIM EXEMPLO OPÇÃO DO MENU
+
 
 -- string symbols
 -- from unkn0wnsoldier1138
