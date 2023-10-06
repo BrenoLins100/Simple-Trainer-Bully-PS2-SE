@@ -2,9 +2,13 @@
 
 luac -o "script.lur" script.lua
 
+meu exemplo: luac -o "ArcRace1.lur" menu.lua
+
 -- Editando arquivo img
 
 img -open "../script.img" -add "script.lur" -rebuild
+
+meu exemplo: img -open "F:\Steam\steamapps\common\Bully Scholarship Edition\Scripts\Scripts.img" -add "ArcRace1.lur" -rebuild
 
 
 
