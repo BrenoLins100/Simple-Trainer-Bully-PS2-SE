@@ -5,11 +5,13 @@ function MissionSetup()
 end
  
 function main()
+  
   local options = {
     {name = "Spawnar veiculos",func = VehicleSpawner},
     {name = "Style Selector",func = StyleSelector},
     {name = "Weapon Selector",func = WeaponSelector},
-    {name = "Tele Transporte", func = TeleTransporte}
+    {name = "Tele Transporte", func = TeleTransporte},
+    {name = "Setar arma de pedreste", func = SetPedWeapon}
   }
   
   local s = 1
@@ -20,10 +22,11 @@ function main()
       s = s + 1
     end
     TextPrintString("Simple Trainer v1 By Breno Lins \n \n"..s.."--"..options[s].name,1,1)
+    --TextPrintString("Navegar: ~dleft~ ~dright~ \n \n Confirmar: ~ddown~  ",4,2)
     if IsButtonBeingPressed(3,0) then
       options[s].func()
     end
-    if IsButtonBeingPressed(8,0) then
+    if IsButtonBeingPressed(7,0) then
       CoordsShow()
     end
     Wait(0)
@@ -90,16 +93,42 @@ local dirige = false
 function VehicleSpawner()
 
   local options = {
-    {name = "Bmx Race", id = 272 },
-    {name = "Bike retro", id= 273},
-    {name = "Moto policial", id= 275},
-    {name = "Cortador de grama", id = 284},
-    {name = "Viatura policial", id = 295}
+    {name = "Bmx Race", id = 272},
+    {name = "Retro", id = 273},
+    {name = "Crap BMX", id = 274},
+    {name = "Bike Cop", id = 275},
+    {name = "Scooter", id = 276},
+    {name = "Bike", id = 277},
+    {name = "Custom Bike", id = 278},
+    {name = "Ban Bike", id = 279},
+    {name = "Mountain Bike", id = 280},
+    {name = "Old Bike", id = 281},
+    {name = "Racer", id = 282},
+    {name = "Aqua Bike", id = 283},
+    {name = "Lawn Mower", id = 284},
+    {name = "Arcade 3", id = 285},
+    {name = "Taxi Cab", id = 286},
+    {name = "Arcade 2", id = 287},
+    {name = "Dozer", id = 288},
+    {name = "Go Cart", id = 289},
+    {name = "Limo", id = 290},
+    {name = "Delivery Truck", id = 291},
+    {name = "Foreign", id = 292},
+    {name = "Cargo Green", id = 293},
+    {name = "70 Wagon", id = 294},
+    {name = "Police Car", id = 295},
+    {name = "Domestic", id = 296},
+    {name = "Truck", id = 297},
+    {name = "Arcade 1", id = 298},
   }
-  -- pegando coordenadas x,y,z do jimmy
-  local x,y,z = PlayerGetPosXYZ()
+
   local i = 1
+  local VehCont = 0
   repeat
+
+    -- pegando coordenadas x,y,z do jimmy
+    local x,y,z = PlayerGetPosXYZ()
+
     if IsButtonBeingPressed(0,0) and i > 1 then
       i = i - 1
     elseif IsButtonBeingPressed(1,0) and i < table.getn(options) then
@@ -108,16 +137,21 @@ function VehicleSpawner()
     TextPrintString(i.. "-" .. options[i].name, 1,1 )
     Wait(0)
     if IsButtonBeingPressed(3,0) then
-
+      VehCont = VehCont + 1
       -- caso a funcao que permite o jogador ja esteja ativa previamente.
       if dirige then
-        TextPrintString("Já dirige!",4,2) -- remover isso depois (log)
+        TextPrintString("Veículo criado!\n".."Veiculos criados:".. VehCont,4,2) -- remover isso depois (log)
       else 
         dirige = true
-        TextPrintString("Permitindo jogador dirigir!",4,2)
+        TextPrintString("Permitindo jogador dirigir!\n veiculo criado.",4,2)
         PedSetFlag(gPlayer, 42, true)
       end
 
+      if VehCont == 15 then
+        TextPrintString("Limite de veículos atingido!\n Limpando area...")
+        VehicleDelete(x-1,y,z)
+        VehCont = 0
+      end
        -- criando veiculo x-5 -> para que o veiculo nao nasça em cima do jimmy
        VehicleCreateXYZ(options[i].id, x-5, y, z)
     end
@@ -128,7 +162,36 @@ end
  
 function CoordsShow()
     local x,y,z = PlayerGetPosXYZ()
-    TextPrintString("X:"..x.. "Y:" ..y.. "Z:" .. z,5,2)
+    --TextPrintString("X:"..x.. "Y:" ..y.. "Z:" .. z,5,2)
+    TextPrintString(tostring(PedLockTarget(gPlayer)),5,2)
+end
+
+function SetPedWeapon()
+
+  local options = {
+    {name = "yardstick", id = 299},
+    {name = "bat", id = 300},
+  }
+
+  local i = 1
+  repeat
+    if IsButtonBeingPressed(0,0) and i > 1 then
+      i = i - 1
+    elseif IsButtonBeingPressed(1,0) and i < table.getn(options) then
+      i = i + 1
+    end
+    TextPrintString(i.."-"..options[i].name,1,1)
+    Wait(0)
+    if IsButtonBeingPressed(3,0) then
+      local targetPed = PedGetTargetPed(gPlayer) -- pedreste sobre a mira
+      if PedIsValid(targetPed) then -- verifica se o ped é valido
+        --TextPrintString(tostring(TARGET),1,2) --log
+        PedSetWeapon(targetPed, options[i].id, 1)
+      else
+        TextPrintString("Pedreste invalido.",1,2)
+      end
+    end
+  until IsButtonBeingPressed(14,0)
 end
 
 
