@@ -8,6 +8,56 @@ img -open "../script.img" -add "script.lur" -rebuild
 
 
 
+-- Exemplo script mini missão
+
+function MissionSetup()
+
+ PlayerSetHealth(300) --This could be moved to main since there's no point in having an entire MissionSetup function to do just one thing, but you decide. (MissionSetup is not mandatory, but if present, it will be the first function read by the game)
+
+end
+
+function main()
+
+ AreaTransitionXYZ(0, 270, -110, 6)
+ Johnny = PedCreateXYZ(23, YourX, YourY, YourZ) --Replace the cords for both peds. (duh)
+ Peanut = PedCreateXYZ(21, YourX, YourY, YourZ)
+ PedSetWeapon(Johnny, 300, 1)
+ PedSetWeapon(Peanut, 395, 1)
+ PedSetHealth(Johnny, 2000)
+ PedSetHealth(Peanut, 33)
+ TextPrintString("Defeat the Greasers", 5, 1)
+ PedSetPedToTypeAttitude(Johnny, 13, 0)
+ PedSetPedToTypeAttitude(Peanut, 13, 0)
+ PedAttackPlayer(Johnny, 3)
+ PedAttackPlayer(Peanut, 3)
+
+ repeat
+  Wait(0)
+ until PedIsDead(Johnny) and PedIsDead(Peanut)
+
+ MissionSucceed()
+
+end
+
+
+--- FIM SCRIPT MINI MISSÃO
+
+---Exemplo setando estilo de pedreste
+
+-- get target pedestrian number.
+local TARGET = PedGetTargetPed(gPlayer)
+
+-- check if pedestrian number is a valid ped.
+if PedIsValid(TARGET) then
+    -- press Zoom Out to change NPC fighting style.
+    if IsButtonBeingPressed(3, 0) then
+        PedSetActionTree(TARGET, '/Global/Nemesis', 'Act/Anim/Nemesis.act')
+    end
+end
+
+-- FIM SETANDO ESTILO DE PEDRESTE
+
+
 -- string symbols
 -- from unkn0wnsoldier1138
 
