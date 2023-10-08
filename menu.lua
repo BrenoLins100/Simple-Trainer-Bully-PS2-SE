@@ -18,9 +18,14 @@ function main()
   repeat
     if IsButtonBeingPressed(0,0) and s > 1 then
       s = s - 1
-      SoundPlay2D("NavUp") 
     elseif IsButtonBeingPressed(1,0) and s < table.getn(options) then
       s = s + 1
+    elseif IsButtonBeingPressed(1,0) and s == table.getn(options) then
+      s = s - table.getn(options) + 1
+    elseif IsButtonBeingPressed(0,0) and s == 1 then
+      s = table.getn(options) 
+    end
+    if IsButtonBeingPressed(0,0) or IsButtonBeingPressed(1,0) then
       SoundPlay2D("NavUp") 
     end
     TextPrintString("Simple Trainer v1 By Breno Lins \n \n"..s.."--"..options[s].name,1,1)
@@ -30,7 +35,7 @@ function main()
       options[s].func()
     end
     if IsButtonBeingPressed(7,0) then
-      SoundPlay2D("RightBtn")
+      SoundPlay2D("ButtonUp") -- testando
       CoordsShow()
     end
     Wait(0)
@@ -180,12 +185,24 @@ function VehicleSpawner()
   --TextPrintString("X:"..x.. "Y:" ..y.. "Z:" .. z,5,2)
 end
  
+isAlreadyTracked = false
+
 function CoordsShow()
     local x,y,z = PlayerGetPosXYZ()
-    --TextPrintString("X:"..x.. "Y:" ..y.. "Z:" .. z,5,2)
+    local veiculos = VehicleFindInAreaXYZ(x,y,z,1)
 
-    -- Imprimir os valores da tabela
-   
+
+    --[[for i,veh in ipairs(veiculos) do
+      if isAlreadyTracked then
+        TextPrintString('Voce ja tem um veiculo rastreado!',4,2)
+      else
+        AddBlipForCar(veh, 9, 1)
+        Wait(0)
+        VehicleDontCleanup(veh) -- nao limpar o veiculo do mapa!.
+        isAlreadyTracked = true 
+      end
+    end
+   --]]
 end
 
 function SetPedWeapon()
