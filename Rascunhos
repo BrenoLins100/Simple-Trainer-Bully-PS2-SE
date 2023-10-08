@@ -107,6 +107,12 @@ end
 14   Look Back
 15   Crouch
 
+-- Efeitos sonoros
+
+ SoundPlay2D("NavUp") 
+ SoundPlay2D("RightBtn")
+ SoundPlay2D("WrongBtn")
+
 
 -- string symbols
 -- from unkn0wnsoldier1138
@@ -154,3 +160,65 @@ end
 ~LOOK_BACK~ - look back button
 Ã„ - save book
 ~save~ - save book
+
+--- AREAS COORDS AND AREA ID 
+
+    {2          ,-628.4 ,-312.5 ,-0.0       ,"School"},
+    {14         ,-496.6 ,310.6 ,31.3        ,"Boys HQ"},
+    {59         ,-749.4 ,352.2 ,3.5     ,"Jocks HQ"},
+    {60         ,-774.3 ,355.2 ,6.4     ,"Preps HQ"},
+    {30         ,-726.0 ,34.2 ,-2.3     ,"Nerds HQ"},
+    {61         ,-694.6 ,346.4 ,3.2     ,"Greasers HQ"},
+    {57         ,-656.8 ,248.8 ,15.2        ,"Townies HQ"},
+    {0          ,521.8 ,-89.4 ,3.7      ,"Bullworth Town"},
+    {0          ,498.2 ,-239.6 ,1.9     ,"New Conventry"},
+    {0          ,370.1 ,413.2 ,21.0     ,"Bullworth Vale"},
+    {0          ,323.7 ,-436.9 ,3.1     ,"Blue Skies"},
+    {38         ,-735.1 ,468.8 ,1.9     ,"Asylum"},
+    {8          ,-756.9 ,-56.2 ,9.3     ,"Basement"},
+    {0          ,188.2 ,438.3 ,5.3      ,"Carnival"},
+    {55         ,-469.4 ,-71.4 ,9.7     ,"Freakshow"},
+    {27         ,-712.3 ,376.9 ,295.0       ,"Boxing Ring"},
+    {0          ,272.4 ,300.9 ,1.2      ,"Beach"},
+    {29         ,-785.6 ,379.7 ,0.0     ,"Bike Store"},
+    {50         ,-792.6 ,47.9 ,6.6      ,"Carnival Store"},
+    {55         ,-469.2 ,-76.8 ,9.0     ,"Freak Show"},
+    {42         ,-381.9 ,483.4 ,1.5     ,"GoKart Race"},
+    {32         ,-565.4 ,133.2 ,46.1        ,"Harrington House"},
+    {0          ,-27.9 ,-73.7 ,1.0      ,"School Field"},
+    {13         ,-619.0 ,-59.5 ,59.6        ,"Gym"},
+    {13         ,-676.0 ,-58.6 ,55.4        ,"Pool"},
+    {0          ,186.5 ,-3.0 ,5.4       ,"Parking"},
+    {0          ,164.1 ,-73.8 ,14.8     ,"School Mini Rooftop"},
+    {9          ,-773.6 ,203.0 ,90.1        ,"Library"},
+    {0          ,135.5 ,-131.7 ,6.8     ,"Harrington Yard"},
+    {0          ,271.0 ,-72.9 ,5.9      ,"Bullworth Academy"},
+    {27         ,-732.2 ,378.4 ,298.0       ,"Boxing Club"},
+    {26         ,-573.3 ,388.5 ,0.0     ,"Yum Yum Market"},
+    {0          ,443.5 ,505.9 ,22.9     ,"Tad House"},
+    {0          ,438.5 ,389.2 ,17.2     ,"Bullworth Park"},
+    {0          ,536.0 ,374.3 ,17.1     ,"Mini Asylum"},
+    {0          ,634.2 ,161.4 ,19.9     ,"Grave Yard"},
+    {0          ,647.7 ,83.4 ,8.5       ,"Dike"},
+    {34         ,-646.7 ,261.5 ,0.9     ,"Clothing Store 1"},
+    {30         ,-726.1 ,14.0 ,-0.0     ,"Dragon's Wing comic"},
+    {56         ,-667.2 ,387.4 ,2.4     ,"Clothing Store 2"},
+    {62         ,-749.2 ,637.1 ,30.9        ,"BMX Park"},
+    {0          ,-57.0 ,-312.1 ,4.3     ,"Asylum Outside"},
+    {0          ,73.6 ,-542.8 ,2.7      ,"Near HEM-O Building"},
+    {0          ,53.7 ,-582.3 ,32.4     ,"Outside Chem Plant"},
+    {0          ,-4.4 ,-214.0 ,1.0      ,"Near Observatory"},
+    {5          ,-706.0 ,200.9 ,31.5        ,"Principal's Office"},
+    {40         ,-696.5 ,74.9 ,20.2     ,"Observatory"},
+    {19         ,-769.2 ,311.1 ,77.2        ,"Nutcrackin' Room"},
+    {15         ,-557.2 ,317.1 ,-1.9        ,"Multiple Class Room"},
+    {6          ,-702.8 ,312.3 ,33.3        ,"Biology Room"},
+    {20         ,-771.6 ,77.3 ,6.4      ,"Inside HEM-O Building"},
+    {43         ,-736.5 ,-624.6 ,3.2        ,"Junk Yard"},
+    {51         ,-5.6 ,66.2 ,27.1       ,"Arcade Track 1"},
+    {52         ,46.6 ,-23.7 ,0.9       ,"Arcade Track 2"},
+    {53         ,0.8 ,60.1 ,62.6        ,"Arcade Track 3"}, 
+
+Source: Bully Board
+
+--- FIM AREAS COORDS E ID
