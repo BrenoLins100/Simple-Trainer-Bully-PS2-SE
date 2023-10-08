@@ -18,15 +18,19 @@ function main()
   repeat
     if IsButtonBeingPressed(0,0) and s > 1 then
       s = s - 1
+      SoundPlay2D("NavUp") 
     elseif IsButtonBeingPressed(1,0) and s < table.getn(options) then
       s = s + 1
+      SoundPlay2D("NavUp") 
     end
     TextPrintString("Simple Trainer v1 By Breno Lins \n \n"..s.."--"..options[s].name,1,1)
-    --TextPrintString("Navegar: ~dleft~ ~dright~ \n \n Confirmar: ~ddown~  ",4,2)
+    TextPrintString("Navegar: ~dleft~ ~dright~ \n \n Confirmar: ~ddown~  ",4,2)
     if IsButtonBeingPressed(3,0) then
+      SoundPlay2D("RightBtn")
       options[s].func()
     end
     if IsButtonBeingPressed(7,0) then
+      SoundPlay2D("RightBtn")
       CoordsShow()
     end
     Wait(0)
@@ -76,18 +80,30 @@ function WeaponSelector()
 end
 
 function TeleTransporte()
-  PlayerSetPosXYZArea(-701.37, 214.76, 31.55, 5)
-  Wait(10000)
-  PlayerSetPosXYZArea(-628.28, -312.97, 0.00,2)
-while AreaIsLoading() do
-	Wait(0)
-end
-TextPrintString("Teleporte feito com sucesso!", 1, 1)
-end
+  local options = {
+    {areaId = 2, xyz = {-628.4, -312.5, -0.0}, areaName = "School"},
+    {areaId = 5, xyz = {-701.37, 214.76, 31.55}, areaName = "Principal's" },
+    {areaId = 0, xyz = {164.1 ,-73.8 ,14.8}, areaName = "School Mini Roottop"} 
+    -- adicionar mais areas....
+  }
+  local i = 1
+  repeat
+    if IsButtonBeingPressed(0,0) and i > 1 then
+      i = i - 1
+    elseif IsButtonBeingPressed(1,0) and i < table.getn(options) then
+      i = i + 1
+    end
+    TextPrintString(i.."-"..options[i].areaName,1,1)
+    Wait(0)
+    if IsButtonBeingPressed(3,0) then
+      --TextPrintString(tostring(options[i].areaId).. tostring(options[i].xyz[3]), 1,2)
+      Wait(0)
+      AreaTransitionXYZ(options[i].areaId, options[i].xyz[1],options[i].xyz[2],options[i].xyz[3],false)
+    end
+    until IsButtonBeingPressed(14,0)
+  end
 
-
- -- verificando se e a primeira vez que o script é chamado
-
+-- variavel global usada no VehicleSpawner()
 local dirige = false
  
 function VehicleSpawner()
@@ -129,6 +145,8 @@ function VehicleSpawner()
     -- pegando coordenadas x,y,z do jimmy
     local x,y,z = PlayerGetPosXYZ()
 
+    local veiculos = VehicleFindInAreaXYZ(x, y, z, 999)
+
     if IsButtonBeingPressed(0,0) and i > 1 then
       i = i - 1
     elseif IsButtonBeingPressed(1,0) and i < table.getn(options) then
@@ -148,8 +166,10 @@ function VehicleSpawner()
       end
 
       if VehCont == 15 then
-        TextPrintString("Limite de veículos atingido!\n Limpando area...")
-        VehicleDelete(x-1,y,z)
+        TextPrintString("Limite de veículos atingido!\n Limpando area...",4,2)
+        for i, veh in ipairs(veiculos) do
+          VehicleDelete(veh)
+        end
         VehCont = 0
       end
        -- criando veiculo x-5 -> para que o veiculo nao nasça em cima do jimmy
@@ -163,7 +183,9 @@ end
 function CoordsShow()
     local x,y,z = PlayerGetPosXYZ()
     --TextPrintString("X:"..x.. "Y:" ..y.. "Z:" .. z,5,2)
-    TextPrintString(tostring(PedLockTarget(gPlayer)),5,2)
+
+    -- Imprimir os valores da tabela
+   
 end
 
 function SetPedWeapon()
