@@ -28,8 +28,19 @@ function main()
     if IsButtonBeingPressed(0,0) or IsButtonBeingPressed(1,0) then
       SoundPlay2D("NavUp") 
     end
-    TextPrintString("Simple Trainer v1 By Breno Lins \n \n"..s.."--"..options[s].name,1,1)
-    TextPrintString("Navegar: ~dleft~ ~dright~ \n \n Confirmar: ~ddown~  ",4,2)
+    --TextPrintString("Simple Trainer v1 By Breno Lins \n \n"..s.."--"..options[s].name,1,1)
+    --TextPrintString("Navegar: ~dleft~ ~dright~ \n \n Confirmar: ~ddown~  ",4,2)
+
+    local menuString = ""
+    local menuOptCont = ""
+
+    for i,opc in ipairs(options) do
+      menuString = menuString ..  (s == i and "->" or " " )   .. i .. "-" .. opc.name .. "\n"
+      menuOptCont = s .. "/" .. i
+    end
+
+    TextPrintString(menuString,1,1)
+
     if IsButtonBeingPressed(3,0) then
       SoundPlay2D("RightBtn")
       options[s].func()
@@ -151,13 +162,26 @@ function VehicleSpawner()
     local x,y,z = PlayerGetPosXYZ()
 
     local veiculos = VehicleFindInAreaXYZ(x, y, z, 999)
+    local vehMenu = ""
+    
 
     if IsButtonBeingPressed(0,0) and i > 1 then
       i = i - 1
     elseif IsButtonBeingPressed(1,0) and i < table.getn(options) then
       i = i + 1
+    elseif IsButtonBeingPressed(1,0) and i == table.getn(options) then
+      i = i - table.getn(options) + 1
+    elseif IsButtonBeingPressed(0,0) and i == 1 then
+      i = table.getn(options)
     end
-    TextPrintString(i.. "-" .. options[i].name, 1,1 )
+    --TextPrintString(i.. "-" .. options[i].name, 1,1 )
+
+    for j, vehOpt in ipairs(options) do
+      vehMenu = vehMenu ..  (j == i and "->" or "").. vehOpt.name .. "\n"
+                        
+    end
+    TextPrintString(vehMenu,1,1)
+
     Wait(0)
     if IsButtonBeingPressed(3,0) then
       VehCont = VehCont + 1
@@ -181,6 +205,8 @@ function VehicleSpawner()
        VehicleCreateXYZ(options[i].id, x-5, y, z)
     end
   until IsButtonBeingPressed(14,0)
+
+  SoundPlay2D("WrongBtn")
 
   --TextPrintString("X:"..x.. "Y:" ..y.. "Z:" .. z,5,2)
 end
