@@ -149,6 +149,9 @@ function VehicleSpawner()
     elseif IsButtonBeingPressed(0,0) and s == 1 then
       s = table.getn(options)
     end
+    if IsButtonBeingPressed(0,0) or IsButtonBeingPressed(1,0) then
+      SoundPlay2D("NavUp")
+    end
    
     local itemsPorPagina = 13
     local paginaAtual = math.ceil(s / itemsPorPagina)
@@ -189,25 +192,6 @@ function VehicleSpawner()
   --TextPrintString("X:"..x.. "Y:" ..y.. "Z:" .. z,5,2)
 end
  
-isAlreadyTracked = false
-
-function PedFightMaker()
-
-  repeat
-    Wait(0)
-    
-    for p, peds in {PedFindInArea(0,0,0,9999)} do
-      if PedIsValid(peds) then
-        PedAttack(peds,gPlayer,1)
-      end 
-    end
-
-    Wait(0)
-  until IsButtonBeingPressed(14,0)
-
-end
-
-
 function WeaponMenu()
 
   Wait(0)
@@ -230,7 +214,9 @@ function WeaponMenu()
     elseif IsButtonBeingPressed(0,0) and s == 1 then
       s = table.getn(options)
     end
-    if IsButtonBeingPressed(1,0) or IsButtonBeingPressed(1,0) then
+
+
+    if IsButtonBeingPressed(0,0) or IsButtonBeingPressed(1,0) then
       SoundPlay2D("NavUp")
     end
 
@@ -287,19 +273,77 @@ function WeaponSelector()
     {name = "Itchy Powder",id = 394},
     {name = "Kick Me",id = 372},
     {name = "Marbles",id = 349},
+    {name = "News Roll",id = 320},
+    {name = "Pinky Wand",id = 410},
+    {name = "Plate",id = 355},
+    {name = "Poison Gun",id = 395},
+    {name = "Rocket Launcher",id = 307},
+    {name = "Rubber Band",id = 325},
+    {name = "Shield",id = 387},
+    {name = "Metal Plate",id = 360},
+    {name = "Skateboard",id = 437},
+    {name = "Sledge Hammer",id = 324},
+    {name = "Slingshot",id = 303},
+    {name = "Snowball",id = 313},
+    {name = "Snowball 2",id = 330},
+    {name = "Soccer Ball",id = 329},
+    {name = "Spray Can",id = 321},
+    {name = "Spud Gun",id = 305},
+    {name = "Stink Bomb",id = 309},
+    {name = "Super Slingshot",id = 306},
+    {name = "Super Spud Gun",id = 396},
+    {name = "Trash Lid",id = 315},
+    {name = "Umbrella",id = 404},
+    {name = "Vase 1",id = 354},
+    {name = "Vase 2",id = 353},
+    {name = "Vase 3",id = 345},
+    {name = "Water Baloon",id = 383},
+    {name = "Water Pipe",id = 342},
+    {name = "Whip",id = 411},
+    {name = "Wood Paddle",id = 357},
+    {name = "Wood Plank",id = 323},
+    {name = "Yardstick",id = 299},
+    {name = "Flashlight",id = 420},
+    {name = "Tissue Roll",id = 403},
+    {name = "Water Pipe 2",id = 402},
+    {name = "Water Pipe 3",id = 401},
+    {name = "Poo Bag",id = 399}
   }
   local s = 1
   repeat
+
+    local weaponsString = ""
+
     if IsButtonBeingPressed(0,0) and s > 1 then
       s = s - 1
     elseif IsButtonBeingPressed(1,0) and s < table.getn(options) then
       s = s + 1
+    elseif IsButtonBeingPressed(1,0) and s == table.getn(options) then
+      s = s - table.getn(options) + 1
+    elseif IsButtonBeingPressed(0,0) and s == 1 then
+      s = table.getn(options)
     end
-    TextPrintString(s.."-"..options[s].name,1,1)
+
+    local itemsPerPage = 5
+    local currentPage = math.ceil(s/itemsPerPage)
+    local loopStart = (currentPage -1) * itemsPerPage +1
+    local loopEnd = math.min(currentPage * itemsPerPage, table.getn(options))
+
+    for j = loopStart, loopEnd do 
+      weaponsString = weaponsString .. (j == s and "->" or "")..options[j].name .. "\n" 
+    end
+    TextPrintString(weaponsString,1,1)
+
+    if IsButtonBeingPressed(0,0) or IsButtonBeingPressed(1,0) then
+      SoundPlay2D("NavUp")
+    end
+
     Wait(0)
     if IsButtonBeingPressed(3,0) then
       PedSetWeapon(gPlayer,options[s].id,1)
     end
+
+
   until IsButtonBeingPressed(14,0)
 end
 
