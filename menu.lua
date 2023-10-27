@@ -9,9 +9,8 @@ function main()
   local options = {
     {name = "Spawnar veiculos",func = VehicleSpawner},
     {name = "Style Selector",func = StyleSelector},
-    {name = "Weapon Selector",func = WeaponSelector},
+    {name = "Weapon Menu",func = WeaponMenu},
     {name = "Tele Transporte", func = TeleTransporte},
-    {name = "Setar arma de pedreste", func = SetPedWeapon}
   }
   
   local s = 1
@@ -28,8 +27,9 @@ function main()
     if IsButtonBeingPressed(0,0) or IsButtonBeingPressed(1,0) then
       SoundPlay2D("NavUp") 
     end
-    --TextPrintString("Simple Trainer v1 By Breno Lins \n \n"..s.."--"..options[s].name,1,1)
-    --TextPrintString("Navegar: ~dleft~ ~dright~ \n \n Confirmar: ~ddown~  ",4,2)
+    
+    TextPrintString("Simple Trainer v1 By Breno Lins \n\n "..s.."--"..options[s].name,1,1)
+    TextPrintString("Navigation: ~dleft~ ~dright~ \n  Confirm: ~ddown~ \n  Back: ~LOOK_BACK~  ",4,2)
 
     local menuString = ""
     local menuOptCont = ""
@@ -44,10 +44,6 @@ function main()
     if IsButtonBeingPressed(3,0) then
       SoundPlay2D("RightBtn")
       options[s].func()
-    end
-    if IsButtonBeingPressed(7,0) then
-      SoundPlay2D("ButtonUp") -- testando
-      CoordsShow()
     end
     Wait(0)
   until false
@@ -74,27 +70,6 @@ function StyleSelector()
   until IsButtonBeingPressed(14,0)
 end
  
-function WeaponSelector()
-  local options = {
-    {name = "yardstick", id = 299},
-    {name = "bat", id = 300},
-  }
-  local s = 1
-  repeat
-    if IsButtonBeingPressed(0,0) and s > 1 then
-      s = s - 1
-    elseif IsButtonBeingPressed(1,0) and s < table.getn(options) then
-      s = s + 1
-    end
-    TextPrintString(s.."-"..options[s].name,1,1)
-    Wait(0)
-    if IsButtonBeingPressed(3,0) then
-     -- PedSetWeapon(gPlayer,options[s].id,1)
-     TextPrintString(tostring(IsItemAWeapon(options[s].id)),1,2) -- verificando se o item é uma arma
-    end
-  until IsButtonBeingPressed(14,0)
-end
-
 function TeleTransporte()
   local options = {
     {areaId = 2, xyz = {-628.4, -312.5, -0.0}, areaName = "School"},
@@ -154,7 +129,7 @@ function VehicleSpawner()
     {name = "Arcade 1", id = 298},
   }
 
-  local i = 1
+  local s = 1
   local VehCont = 0
   repeat
 
@@ -165,20 +140,23 @@ function VehicleSpawner()
     local vehMenu = ""
     
 
-    if IsButtonBeingPressed(0,0) and i > 1 then
-      i = i - 1
-    elseif IsButtonBeingPressed(1,0) and i < table.getn(options) then
-      i = i + 1
-    elseif IsButtonBeingPressed(1,0) and i == table.getn(options) then
-      i = i - table.getn(options) + 1
-    elseif IsButtonBeingPressed(0,0) and i == 1 then
-      i = table.getn(options)
+    if IsButtonBeingPressed(0,0) and s > 1 then
+      s = s - 1
+    elseif IsButtonBeingPressed(1,0) and s < table.getn(options) then
+      s = s + 1
+    elseif IsButtonBeingPressed(1,0) and s == table.getn(options) then
+      s = s - table.getn(options) + 1
+    elseif IsButtonBeingPressed(0,0) and s == 1 then
+      s = table.getn(options)
     end
-    --TextPrintString(i.. "-" .. options[i].name, 1,1 )
+   
+    local itemsPorPagina = 13
+    local paginaAtual = math.ceil(s / itemsPorPagina)
+    local inicio = (paginaAtual -1) * itemsPorPagina +1
+    local fim = math.min(paginaAtual * itemsPorPagina, table.getn(options))
 
-    for j, vehOpt in ipairs(options) do
-      vehMenu = vehMenu ..  (j == i and "->" or "").. vehOpt.name .. "\n"
-                        
+    for j = inicio, fim do
+      vehMenu = vehMenu ..  (j == s and "->" or "").. options[j].name .. "\n"                       
     end
     TextPrintString(vehMenu,1,1)
 
@@ -213,22 +191,116 @@ end
  
 isAlreadyTracked = false
 
-function CoordsShow()
-    local x,y,z = PlayerGetPosXYZ()
-    local veiculos = VehicleFindInAreaXYZ(x,y,z,1)
+function PedFightMaker()
 
-
-    --[[for i,veh in ipairs(veiculos) do
-      if isAlreadyTracked then
-        TextPrintString('Voce ja tem um veiculo rastreado!',4,2)
-      else
-        AddBlipForCar(veh, 9, 1)
-        Wait(0)
-        VehicleDontCleanup(veh) -- nao limpar o veiculo do mapa!.
-        isAlreadyTracked = true 
-      end
+  repeat
+    Wait(0)
+    
+    for p, peds in {PedFindInArea(0,0,0,9999)} do
+      if PedIsValid(peds) then
+        PedAttack(peds,gPlayer,1)
+      end 
     end
-   --]]
+
+    Wait(0)
+  until IsButtonBeingPressed(14,0)
+
+end
+
+
+function WeaponMenu()
+
+  Wait(0)
+
+  local options = {
+
+    {name = "Weapon Selector", func = WeaponSelector},
+    {name = "Ped Weapon Selector", func =  SetPedWeapon},
+  }
+
+  local s = 1
+  repeat
+
+    if IsButtonBeingPressed(0,0) and s > 1 then
+      s = s - 1
+    elseif IsButtonBeingPressed(1,0) and s < table.getn(options) then
+      s = s + 1
+    elseif IsButtonBeingPressed(1,0) and s == table.getn(options) then
+      s = s - table.getn(options) + 1
+    elseif IsButtonBeingPressed(0,0) and s == 1 then
+      s = table.getn(options)
+    end
+    if IsButtonBeingPressed(1,0) or IsButtonBeingPressed(1,0) then
+      SoundPlay2D("NavUp")
+    end
+
+    local menuString = ""
+    local menuOptCont = ""
+  
+      for i,opc in ipairs(options) do
+        menuString = menuString ..  (s == i and "->" or " " )   .. i .. "-" .. opc.name .. "\n"
+        menuOptCont = s .. "/" .. i
+      end
+  
+      TextPrintString(menuString,1,1)
+  
+      if IsButtonBeingPressed(3,0) then
+        SoundPlay2D("RightBtn")
+        options[s].func()
+      end
+      Wait(0)
+  until IsButtonBeingPressed(14,0)
+  SoundPlay2D("WrongBtn")
+
+
+end
+
+
+function WeaponSelector()
+  local options = {
+    {name = "Apple",id = 310},
+    {name = "Banana",id = 358},
+    {name = "Baseball",id = 302},
+    {name = "Basket Ball",id = 381},
+    {name = "Bat",id = 300},
+    {name = "Big Firework",id = 397},
+    {name = "Books 1",id = 405},
+    {name = "Books 2",id = 413},
+    {name = "Books 3",id = 414},
+    {name = "Books 4",id = 415},
+    {name = "Books 5",id = 416},
+    {name = "Brick",id = 311},
+    {name = "Broom",id = 377},
+    {name = "Camera",id = 328},
+    {name = "Digital Camera",id = 426},
+    {name = "Dead Rat",id = 346},
+    {name = "Devil Fork",id = 409},
+    {name = "Dish",id = 338},
+    {name = "Egg",id = 312},
+    {name = "Fists",id = -1},
+    {name = "Fire Extinguisher",id = 326},
+    {name = "Fire cracker",id = 301},
+    {name = "Football",id = 331},
+    {name = "Football (Bomb)",id = 400},
+    {name = "Frisbee",id = 335},
+    {name = "Gold Pipe",id = 418},
+    {name = "Itchy Powder",id = 394},
+    {name = "Kick Me",id = 372},
+    {name = "Marbles",id = 349},
+  }
+  local s = 1
+  repeat
+    if IsButtonBeingPressed(0,0) and s > 1 then
+      s = s - 1
+    elseif IsButtonBeingPressed(1,0) and s < table.getn(options) then
+      s = s + 1
+    end
+    TextPrintString(s.."-"..options[s].name,1,1)
+    Wait(0)
+    if IsButtonBeingPressed(3,0) then
+      PedSetWeapon(gPlayer,options[s].id,1)
+    end
+  until IsButtonBeingPressed(14,0)
 end
 
 function SetPedWeapon()
