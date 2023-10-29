@@ -11,6 +11,7 @@ function main()
     {name = "Style Selector",func = StyleSelector},
     {name = "Weapon Menu",func = WeaponMenu},
     {name = "Tele Transporte", func = TeleTransporte},
+    {name = "Add Money", func = AddMoney}
   }
   
   local s = 1
@@ -29,7 +30,7 @@ function main()
     end
     
     TextPrintString("Simple Trainer v1 By Breno Lins \n\n "..s.."--"..options[s].name,1,1)
-    TextPrintString("Navigation: ~dleft~ ~dright~ \n  Confirm: ~ddown~ \n  Back: ~LOOK_BACK~  ",4,2)
+   -- TextPrintString("Navigation: ~dleft~ ~dright~ \n  Confirm: ~ddown~ \n  Back: ~LOOK_BACK~  ",4,2)
 
     local menuString = ""
     local menuOptCont = ""
@@ -45,10 +46,56 @@ function main()
       SoundPlay2D("RightBtn")
       options[s].func()
     end
+    -- script text rainbow scooter
+    if IsButtonBeingPressed(8,0) then
+      Wait(0)
+      --ClothingSetPlayer(1,"R_Jacket1")
+      --ClothingBuildPlayer()
+      
+      if PlayerIsInAnyVehicle() then
+        local veiculos = VehicleFindInAreaXYZ(x, y, z, 999)
+        local modelId = 0
+      
+
+        for i, veh in ipairs(veiculos) do
+          
+          modelId = VehicleGetModelId(veh)
+          if modelId == 276 then
+           repeat
+            Wait(1000)
+            VehicleSetColor(veh,math.random(0,99))
+            --EffectCreate("GymFire",PlayerGetPosXYZ())
+            --EffectKill("GymFire")
+           until not PlayerIsInAnyVehicle()
+          else 
+            TextPrintString("You must be on scooter to use this!",4,2)
+          end
+        end
+      end
+
+    end
+    if IsButtonBeingPressed(7,0) then
+      InfiniteAmmo()
+    end
     Wait(0)
   until false
 end
  
+local infAmmo = false
+
+function InfiniteAmmo()
+ 
+  if infAmmo == false then
+    infAmmo = true
+    TextPrintString("ON",4,2)
+    PedSetFlag(gPlayer, 24, true)
+  else
+    infAmmo = false
+    TextPrintString("OFF",4,2)
+    PedSetFlag(gPlayer, 24, false)
+  end
+end
+
 function StyleSelector()
   local options = {
     {name = "Russell",root = "/Global/BOSS_Russell",file = "Act/Anim/BOSS_Russell.act"},
@@ -74,7 +121,8 @@ function TeleTransporte()
   local options = {
     {areaId = 2, xyz = {-628.4, -312.5, -0.0}, areaName = "School"},
     {areaId = 5, xyz = {-701.37, 214.76, 31.55}, areaName = "Principal's" },
-    {areaId = 0, xyz = {164.1 ,-73.8 ,14.8}, areaName = "School Mini Roottop"} 
+    {areaId = 0, xyz = {164.1 ,-73.8 ,14.8}, areaName = "School Mini Roottop"},
+    {areaId = 43, xyz = {-736.5 ,-624.6 ,3.2}, areaName ="Junk Yard"}
     -- adicionar mais areas....
   }
   local i = 1
@@ -183,7 +231,7 @@ function VehicleSpawner()
         VehCont = 0
       end
        -- criando veiculo x-5 -> para que o veiculo nao nasça em cima do jimmy
-       VehicleCreateXYZ(options[i].id, x-5, y, z)
+       VehicleCreateXYZ(options[s].id, x-5, y, z)
     end
   until IsButtonBeingPressed(14,0)
 
@@ -191,7 +239,7 @@ function VehicleSpawner()
 
   --TextPrintString("X:"..x.. "Y:" ..y.. "Z:" .. z,5,2)
 end
- 
+
 function WeaponMenu()
 
   Wait(0)
@@ -340,7 +388,7 @@ function WeaponSelector()
 
     Wait(0)
     if IsButtonBeingPressed(3,0) then
-      PedSetWeapon(gPlayer,options[s].id,1)
+      PedSetWeapon(gPlayer,options[s].id,999)
     end
 
 
@@ -372,6 +420,42 @@ function SetPedWeapon()
         TextPrintString("Pedreste invalido.",1,2)
       end
     end
+  until IsButtonBeingPressed(14,0)
+end
+
+
+-- Funcao AddMoney
+
+function AddMoney()
+  local number = 0
+  repeat
+    local playerMoney = PlayerGetMoney()
+    if IsButtonPressed(0,0) then
+      SoundPlay2D("NavUp") 
+      if number == 0 then
+        number = 100000
+      else
+        number =  number - 100
+      end
+    elseif IsButtonPressed(1,0) then
+      SoundPlay2D("NavUp") 
+      if number == 100000 then
+        number = 0
+      else
+        number =  number + 100
+      end
+    end
+    if IsButtonBeingPressed(3,0) then
+      if playerMoney == 10000000 then
+        SoundPlay2D("WrongBtn")
+        TextPrintString("Wallet full", 4,1)
+      else
+        SoundPlay2D("RightBtn")
+        PlayerAddMoney(number*100)
+      end
+    end
+    TextPrintString("Money amount:".."$"..tostring(number),1,2)
+    Wait(0)
   until IsButtonBeingPressed(14,0)
 end
 
