@@ -222,3 +222,30 @@ end
 Source: Bully Board
 
 --- FIM AREAS COORDS E ID
+
+--- Carregar objetos de eventos do jogo 
+
+  AreaLoadSpecialEntities("valor", boolean) -- como usar
+  AreaLoadSpecialEntities("Christmas",true) -- Carrega o natal
+  ChapterSet(x) -- seta captitulo do game
+
+Lista de props de missoes
+
+    {"Halloween1"                   ,"Halloween"},
+    {"Halloween2"           ,"Halloween 2"},
+    {"Halloween3"           ,"Halloween 3"},
+    {"vote"             ,"Earnest speech"},
+    {"TombstonePost"            ,"Tombstone"},
+    {"PumpkinPost"              ,"Pumpkin"},
+    {"RL_rich1"             ,"Race The Vale"},
+    {"Christmas"            ,"Christmas"},
+    {"Nutcracker"           ,"Nutrackin'"},
+    {"Rudy1"                ,"Town Christmas"},
+    {"Rudy2"            ,"Rudy the Red Nosed Santa"},
+    {"Rudy3"                ,"Rudy the Red Nosed Santa 2"},
+    {"delivery"             ,"Discreet Delivery"},
+    {"Miracle"              ,"Miracle on Bullworth st"},
+    {"2s07"             ,"Small Offences"},
+
+ AreaLoadSpecialEntities("Halloween1", true) 
+
