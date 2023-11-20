@@ -112,6 +112,8 @@ end
  SoundPlay2D("NavUp") 
  SoundPlay2D("RightBtn")
  SoundPlay2D("WrongBtn")
+ SoundPlay2D("ButtonUp")
+ SoundPlay2D("ButtonDown")
 
 
 -- string symbols
