@@ -251,3 +251,9 @@ Lista de props de missoes
 
  AreaLoadSpecialEntities("Halloween1", true) 
 
+
+-- Criando prop
+
+local x,y,z = PlayerGetPosXYZ()
+CreatePersistentEntity("Ladder_3M", x+5,y,z, 0, AreaGetVisible())
+
