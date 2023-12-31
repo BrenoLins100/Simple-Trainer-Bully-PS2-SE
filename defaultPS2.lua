@@ -27,9 +27,9 @@ main = function()
   
 
   
-  AreaRegisterAreaScript(22, "AreaScripts/Island3.lua") -- carregando area de teste
-  AreaRegisterAreaScript(31, "AreaScripts/TestArea.lua") -- carregando area de teste
-  AreaRegisterAreaScript(37,"AreaScripts/Funhouse.lua")
+  --AreaRegisterAreaScript(22, "AreaScripts/Island3.lua") -- carregando area de teste
+  --AreaRegisterAreaScript(31, "AreaScripts/TestArea.lua") -- carregando area de teste
+  --AreaRegisterAreaScript(37,"AreaScripts/Funhouse.lua")
 
   F_LoadAllAnim()
 
@@ -40,6 +40,10 @@ main = function()
     PedSetFlag(gPlayer, 24, infiniteAmmo)
     PedSetFlag(gPlayer, 30, infiniteHealth)
 
+
+    if noPunishment then
+      PlayerSetPunishmentPoints(0)
+    end
 
     if showingCoords then
       local x,y,z = PlayerGetPosXYZ()
@@ -1522,9 +1526,10 @@ end
 
 function DisablePunishment()
   noPunishment = not noPunishment
+  TextPrintString("You must close all menus while playing to disable punishment.",2,3)
   DisablePunishmentSystem(noPunishment)
   PlayerSetPunishmentPoints(0)
-  Wait(0)
+  Wait(3000)
   MiscMenu()
 end
 
@@ -1619,8 +1624,8 @@ function F_LoadAllAnim()
     LoadAnimationGroup("TE_Female")
 
     -- funhouse scripts
-    LoadAnimationGroup("Area_Funhouse")
-    LoadAnimationGroup("4_04_FunhouseFun")
+    --LoadAnimationGroup("Area_Funhouse")
+    --LoadAnimationGroup("4_04_FunhouseFun")
 end
 
 
