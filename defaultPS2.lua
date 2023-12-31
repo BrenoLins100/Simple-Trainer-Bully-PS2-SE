@@ -4,6 +4,8 @@ local infiniteAmmo = false
 local infiniteHealth = false
 local snowWeather = false
 
+local currentChapt = ChapterGet()
+
 local mainMenuPos = 1
 local modelMenuPos = 1
 local vehMenuPos = 1
@@ -20,7 +22,7 @@ main = function()
   -- Setup code goes here.
 
 
-  TextPrintString("Mod by Breno Lins, youtube.com/@brenolins2598",5,1)
+  TextPrintString("Mod by Breno Lins, youtube.com/@brenolins2598",10,1)
   TextPrintString("Press to open the menu: ".."~L1~".. "+".. "~dleft~",10,2)
   
 
@@ -106,34 +108,6 @@ function mainMenu()
     if IsButtonBeingPressed(3,0) then
       SoundPlay2D("RightBtn")
       options[s].func()
-    end
-    -- script text rainbow scooter
-    if IsButtonBeingPressed(8,0) then
-      Wait(0)
-      --ClothingSetPlayer(1,"R_Jacket1")
-      --ClothingBuildPlayer()
-      
-      if PlayerIsInAnyVehicle() then
-        local veiculos = VehicleFindInAreaXYZ(x, y, z, 999)
-        local modelId = 0
-      
-
-        for i, veh in ipairs(veiculos) do
-          
-          modelId = VehicleGetModelId(veh)
-          if modelId == 276 then
-           repeat
-            Wait(1000)
-            VehicleSetColor(veh,math.random(0,99))
-            --EffectCreate("GymFire",PlayerGetPosXYZ())
-            --EffectKill("GymFire")
-           until not PlayerIsInAnyVehicle()
-          else 
-            TextPrintString("You must be on scooter to use this!",4,2)
-          end
-        end
-      end
-
     end
     Wait(0)
   until IsButtonBeingPressed(14,0)
@@ -1488,9 +1462,9 @@ function MiscMenu()
   local options = {
     {name = "Show current coordinates" .. (showingCoords and "[ON]" or "[OFF]") , func = ShowCoords},
     {name = "Disable Punishment" .. (noPunishment and "[ON]" or "[OFF]"), func = DisablePunishment },
-    {name = "Infinite Ammo" .. (infiniteAmmo and "[ON]" or "[OFF]"), func = SetInfiniteAmmo },
-    {name = "Inifinite health" .. (infiniteHealth and "[ON]" or "[OFF]"), func = SetInfiniteHealth }
-   -- {name = "Snow Weather".. (snowWeather and "[ON]" or "[OFF]"), func = setSnowWeather }
+    {name = "Infinite ammo" .. (infiniteAmmo and "[ON]" or "[OFF]"), func = SetInfiniteAmmo },
+    {name = "Inifinite health" .. (infiniteHealth and "[ON]" or "[OFF]"), func = SetInfiniteHealth },
+    {name = "Snow Weather".. (snowWeather and "[ON]" or "[OFF]"), func = SetSnowWeather }
   }
 
 
@@ -1560,7 +1534,6 @@ function SetInfiniteAmmo()
   PedSetFlag(gPlayer, 24, infiniteAmmo)
   Wait(0)
   MiscMenu()
-  BulletinSetupMessage("Teste")
 end
 
 function SetInfiniteHealth()
@@ -1574,6 +1547,21 @@ end
 function SetSnowWeather()
 
   snowWeather = not snowWeather
+  Wait(100)
+
+  if snowWeather then
+    ChapterSet(2)
+    AreaLoadSpecialEntities("Christmas",true)
+  end
+
+  if not snowWeather then
+    ChapterSet(currentChapt)
+    AreaLoadSpecialEntities("Christmas",false)
+  end
+
+  Wait(0)
+
+  MiscMenu()
 
 end
 
